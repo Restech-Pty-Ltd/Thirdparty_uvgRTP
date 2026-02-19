@@ -144,9 +144,8 @@ rtp_error_t uvgrtp::reception_flow::start(std::shared_ptr<uvgrtp::socket> socket
     // set receiver thread priority to maximum
 #ifndef WIN32
     struct sched_param params;
-    params.sched_priority = sched_get_priority_max(SCHED_FIFO);
+    params.sched_priority = 1; 
     pthread_setschedparam(receiver_->native_handle(), SCHED_FIFO, &params);
-    params.sched_priority = sched_get_priority_max(SCHED_FIFO) - 1;
     pthread_setschedparam(processor_->native_handle(), SCHED_FIFO, &params);
 #elif defined(_MSC_VER)
     SetThreadPriority(receiver_->native_handle(), REALTIME_PRIORITY_CLASS);
